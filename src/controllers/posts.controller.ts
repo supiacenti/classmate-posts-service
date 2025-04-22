@@ -1,32 +1,32 @@
 import { Request, Response } from 'express'
-import * as service from '../services/posts.service'
+import * as postService from '../services/posts.service'
 
-export const getPosts = (req: Request, res: Response) => {
-  const data = service.getAll()
-  res.json(data)
+export const getAllPosts = (req: Request, res: Response) => {
+  const data = postService.getAllPosts()
+  res.status(200).json(data)
 }
 
 export const getPostById = (req: Request, res: Response) => {
-  const post = service.getById(req.params.id)
+  const post = postService.getPostById(req.params.id)
   if (!post) return res.status(404).json({ error: 'Post não encontrado' })
-  res.json(post)
+  res.status(200).json(post)
 }
 
 export const createPost = (req: Request, res: Response) => {
   const { title, content, author } = req.body
-  const post = service.create(title, content, author)
+  const post = postService.createPost(title, content, author)
   res.status(201).json(post)
 }
 
 export const updatePost = (req: Request, res: Response) => {
-  const { title, content, author } = req.body
-  const updated = service.update(req.params.id, title, content, author)
+  const { title, content } = req.body
+  const updated = postService.updatePost(req.params.id, title, content)
   if (!updated) return res.status(404).json({ error: 'Post não encontrado' })
-  res.json(updated)
+  res.status(200).json(updated)
 }
 
 export const deletePost = (req: Request, res: Response) => {
-  const success = service.remove(req.params.id)
+  const success = postService.deletePost(req.params.id)
   if (!success) return res.status(404).json({ error: 'Post não encontrado' })
   res.status(204).send()
 }
