@@ -30,3 +30,9 @@ jobs:
         with:
           name: coverage-report
           path: coverage
+
+      - name: 🛠️ Build do projeto
+        run: npm run build
+
+      - name: 🚀 Emular Deploy
+        run: echo "Emulando deploy de produção..."
